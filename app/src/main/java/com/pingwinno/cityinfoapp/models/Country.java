@@ -1,60 +1,32 @@
 package com.pingwinno.cityinfoapp.models;
 
-import java.util.List;
-import java.util.Objects;
-
 public class Country {
-    private String country;
-    private List<String> cities;
+    private int id;
+    private String countryName;
 
     public Country() {
     }
 
-    public Country(String country, List<String> cities) {
-        this.country = country;
-        this.cities = cities;
+    public Country(int id, String countryName) {
+        this.id = id;
+        this.countryName = countryName;
     }
 
-    public String getCountry() {
-        return country;
+    public int getId() {
+        return id;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public List<String> getCities() {
-        return cities;
+    public String getCountryName() {
+        return countryName;
     }
 
-    public void setCities(List<String> cities) {
-        this.cities = cities;
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Country country1 = (Country) o;
-
-        if (!Objects.equals(country, country1.country))
-            return false;
-        return Objects.equals(cities, country1.cities);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = country != null ? country.hashCode() : 0;
-        result = 31 * result + (cities != null ? cities.hashCode() : 0);
-        return result;
-    }
-    
-    @Override
-    public String toString() {
-        return "Country{" +
-                "country='" + country + '\'' +
-                ", cities=" + cities +
-                '}';
-    }
 }

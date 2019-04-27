@@ -91,5 +91,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="hint_string">pick a country</string>
+    <string name="hint_string">pick a countryName</string>
 </resources>
