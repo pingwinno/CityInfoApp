@@ -16,7 +16,7 @@ public class DBFirstTimeInitializator {
         Map<String, List<String>> countriesWithCities = new HashMap<>();
         Log.d("DB_INIT", "Start");
         try {
-            JsonParser.parse(DataHelper.getData(
+            countriesWithCities = JsonParser.parse(DataHelper.getData(
                     "https://raw.githubusercontent.com/David-Haim/CountriesToCitiesJSON/master/countriesToCities.json"));
         } catch (IOException e) {
             Log.e("GET_DATA", "Can't get data. Exception: " + e.toString());
