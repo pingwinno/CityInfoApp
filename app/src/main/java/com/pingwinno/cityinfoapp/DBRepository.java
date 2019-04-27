@@ -13,26 +13,39 @@ import com.pingwinno.cityinfoapp.models.Country;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBAdapter {
+public class DBRepository {
     private DBHelper dbHelper;
     private SQLiteDatabase database;
+    private CountriesTable countriesTable;
+    private CitiesTable citiesTable;
 
-    public DBAdapter(Context context) {
+    public DBRepository(Context context) {
         dbHelper = new DBHelper(context.getApplicationContext());
+        countriesTable = new CountriesTable();
+        citiesTable = new CitiesTable();
+        open();
     }
 
-    public DBAdapter open() {
+    public CountriesTable getCountriesTable() {
+        return countriesTable;
+    }
 
+    public CitiesTable getCitiesTable() {
+        return citiesTable;
+    }
+
+    private void open() {
         database = dbHelper.getWritableDatabase();
         Log.d("OPENEDDB_PATH", database.getPath());
-        return this;
     }
 
     public void close() {
         dbHelper.close();
     }
 
-    public class CountryTable {
+    public class CountriesTable {
+        private CountriesTable() {
+        }
 
         public List<Country> getAllCounties() {
             ArrayList<Country> Countrys = new ArrayList<>();
@@ -106,7 +119,9 @@ public class DBAdapter {
         }
     }
 
-    public class CityTable {
+    public class CitiesTable {
+        private CitiesTable() {
+        }
 
         public List<City> getAllCities() {
             ArrayList<City> cities = new ArrayList<>();

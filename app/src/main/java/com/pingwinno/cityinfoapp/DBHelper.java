@@ -26,8 +26,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE countries (" + "_id"
                 + " INTEGER PRIMARY KEY AUTOINCREMENT," + "country" + " TEXT);");
 
-        db.execSQL("CREATE TABLE city (" + "_id"
-                + " INTEGER PRIMARY KEY AUTOINCREMENT," + "city" + " TEXT," +
+        db.execSQL("CREATE TABLE cities (" + "_id"
+                + " INTEGER PRIMARY KEY AUTOINCREMENT," + "city" + " TEXT, country_id INTEGER," +
                 " CONSTRAINT country_id FOREIGN KEY(_id) REFERENCES countries (_id) " +
                 "ON DELETE CASCADE);");
         Log.d("DB_INIT", db.getPath());
