@@ -103,6 +103,20 @@ public class DBRepository {
             return database.insert(DBHelper.COUNTRIES_TABLE, null, cv);
         }
 
+        public void insert(List<Country> countries) {
+            database.beginTransaction();
+            try {
+                for (Country country : countries) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(DBHelper.COLUMN_COUNTRY_NAME, country.getCountryName());
+                    database.insert(DBHelper.COUNTRIES_TABLE, null, cv);
+                }
+                database.setTransactionSuccessful();
+            } finally {
+                database.endTransaction();
+            }
+        }
+
         public long delete(long CountryId) {
 
             String whereClause = DBHelper.COLUMN_ID + " = ?";
@@ -187,26 +201,59 @@ public class DBRepository {
             return City;
         }
 
-        public long insert(City City) {
+        public List<City> getCities(int countryId) {
+            List<City> cities = new ArrayList<>();
+            String selection = DBHelper.COLUMN_COUNTRY_ID + " = ?";
+            String orderBy = DBHelper.COLUMN_CITY_NAME + " " + "ASC";
+            Cursor cursor = database.query(DBHelper.CITIES_TABLE, new String[]{DBHelper.COLUMN_ID, DBHelper.COLUMN_CITY_NAME},
+                    selection, new String[]{String.valueOf(countryId)}, null, null, orderBy);
+            if (cursor.moveToFirst()) {
+                do {
+                    long id = cursor.getInt(cursor.getColumnIndex(DBHelper.COLUMN_ID));
+                    String cityName = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_CITY_NAME));
+                    cities.add(new City(id, cityName, countryId));
+                }
+                while (cursor.moveToNext());
+            }
+            cursor.close();
+            return cities;
+        }
+
+        public long insert(City city) {
 
             ContentValues cv = new ContentValues();
-            cv.put(DBHelper.COLUMN_CITY_NAME, City.getCityName());
-            cv.put(DBHelper.COLUMN_COUNTRY_ID, City.getCountryId());
+            cv.put(DBHelper.COLUMN_CITY_NAME, city.getCityName());
+            cv.put(DBHelper.COLUMN_COUNTRY_ID, city.getCountryId());
             return database.insert(DBHelper.CITIES_TABLE, null, cv);
         }
 
-        public long delete(long CityId) {
+        public void insert(List<City> cities) {
+            database.beginTransaction();
+            try {
+                for (City city : cities) {
+                    ContentValues cv = new ContentValues();
+                    cv.put(DBHelper.COLUMN_CITY_NAME, city.getCityName());
+                    cv.put(DBHelper.COLUMN_COUNTRY_ID, city.getCountryId());
+                    database.insert(DBHelper.CITIES_TABLE, null, cv);
+                }
+                database.setTransactionSuccessful();
+            } finally {
+                database.endTransaction();
+            }
+        }
+
+        public long delete(long cityId) {
 
             String whereClause = DBHelper.COLUMN_ID + " = ?";
-            String[] whereArgs = new String[]{String.valueOf(CityId)};
+            String[] whereArgs = new String[]{String.valueOf(cityId)};
             return database.delete(DBHelper.CITIES_TABLE, whereClause, whereArgs);
         }
 
-        public long update(City City) {
+        public long update(City city) {
 
-            String whereClause = DBHelper.COLUMN_ID + "=" + City.getId();
+            String whereClause = DBHelper.COLUMN_ID + "=" + city.getId();
             ContentValues cv = new ContentValues();
-            cv.put(DBHelper.COLUMN_CITY_NAME, City.getCityName());
+            cv.put(DBHelper.COLUMN_CITY_NAME, city.getCityName());
             return database.update(DBHelper.CITIES_TABLE, cv, whereClause, null);
         }
     }

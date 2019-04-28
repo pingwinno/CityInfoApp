@@ -16,7 +16,7 @@ public class JsonParserTest {
     @Test
     public void parse() throws IOException {
         Map<String, List<String>> countries = new HashMap<>();
-        countries.put("Christmas Island", new ArrayList<String>() {
+        countries.put("Réunion Island", new ArrayList<String>() {
             {
                 add("Flying Fish Cove");
             }
@@ -28,7 +28,7 @@ public class JsonParserTest {
                 add("Jijiga");
             }
         });
-        String json = "{\"Christmas Island\":[\"Flying Fish Cove\"],\"Ethiopia\":[\"Addis Ababa\",\"Awasa\",\"Jijiga\"]}";
+        String json = "{\"RÃ©union Island\":[\"Flying Fish Cove\"],\"Ethiopia\":[\"Addis Ababa\",\"Awasa\",\"Jijiga\"]}";
         assertThat(countries, is(JsonParser.parse(json)));
 
     }

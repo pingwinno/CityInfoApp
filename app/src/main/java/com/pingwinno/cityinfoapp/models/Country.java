@@ -28,5 +28,10 @@ public class Country {
         this.countryName = countryName;
     }
 
-
+    @Override
+    public String toString() {
+        return "Country{" +
+                "countryName='" + countryName + '\'' +
+                '}';
+    }
 }

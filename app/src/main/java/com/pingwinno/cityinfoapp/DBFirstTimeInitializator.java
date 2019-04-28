@@ -7,6 +7,7 @@ import com.pingwinno.cityinfoapp.models.City;
 import com.pingwinno.cityinfoapp.models.Country;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +29,15 @@ public class DBFirstTimeInitializator {
         Log.d("DB_INIT", "Start");
 
         DBRepository dbRepository = new DBRepository(context);
-        for (Map.Entry<String, List<String>> entry : countriesWithCities.entrySet()) {
-            Country country = new Country();
-            country.setCountryName(entry.getKey());
-            dbRepository.getCountriesTable().insert(country);
-
+        List<Country> countries = new ArrayList<>();
+        for (String countryString : countriesWithCities.keySet()) {
+            if (!countryString.trim().equals("")) {
+                Country country = new Country();
+                country.setCountryName(countryString);
+                countries.add(country);
+            }
         }
+        dbRepository.getCountriesTable().insert(countries);
         dbRepository.close();
     }
 
@@ -41,17 +45,21 @@ public class DBFirstTimeInitializator {
         Log.d("DB_INIT", "Start");
 
         DBRepository dbRepository = new DBRepository(context);
-
-        for (Map.Entry<String, List<String>> entry : countriesWithCities.entrySet()) {
-
-            int countryId = dbRepository.getCountriesTable().getCountry(entry.getKey()).getId();
-            for (String cityString : entry.getValue()) {
-                City city = new City();
-                city.setCityName(cityString);
-                city.setCountryId(countryId);
-                dbRepository.getCitiesTable().insert(city);
+        List<City> cities = new ArrayList<>();
+        for (String countryString : countriesWithCities.keySet()) {
+            if (!countryString.trim().equals("")) {
+                int countryId = dbRepository.getCountriesTable().getCountry(countryString).getId();
+                for (String cityString : countriesWithCities.get(countryString)) {
+                    if (!cityString.trim().equals("")) {
+                        City city = new City();
+                        city.setCityName(cityString);
+                        city.setCountryId(countryId);
+                        cities.add(city);
+                    }
+                }
             }
         }
+        dbRepository.getCitiesTable().insert(cities);
         dbRepository.close();
     }
 }
