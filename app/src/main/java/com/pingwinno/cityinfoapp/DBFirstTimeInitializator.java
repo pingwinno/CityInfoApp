@@ -18,7 +18,7 @@ public class DBFirstTimeInitializator {
     public DBFirstTimeInitializator(Context context) {
         this.context = context;
         try {
-            countriesWithCities = JsonParser.parse(DataHelper.getStringData(
+            countriesWithCities = JsonParser.parseJsonWithDynamicKeyAndBrokenEncoding(DataHelper.getStringData(
                     "https://raw.githubusercontent.com/David-Haim/CountriesToCitiesJSON/master/countriesToCities.json"));
         } catch (IOException e) {
             Log.e("GET_DATA", "Can't get data. Exception: " + e.toString());

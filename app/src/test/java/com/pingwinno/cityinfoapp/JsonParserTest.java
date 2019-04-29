@@ -29,7 +29,7 @@ public class JsonParserTest {
             }
         });
         String json = "{\"RÃ©union Island\":[\"Flying Fish Cove\"],\"Ethiopia\":[\"Addis Ababa\",\"Awasa\",\"Jijiga\"]}";
-        assertThat(countries, is(JsonParser.parse(json)));
+        assertThat(countries, is(JsonParser.parseJsonWithDynamicKeyAndBrokenEncoding(json)));
 
     }
 }

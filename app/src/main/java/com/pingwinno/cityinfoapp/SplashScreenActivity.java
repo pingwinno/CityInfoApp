@@ -13,6 +13,7 @@ import android.widget.Toast;
 import pl.droidsonroids.gif.GifImageView;
 
 public class SplashScreenActivity extends AppCompatActivity {
+    private boolean isNetworkAvailable = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         if (activeNetworkInfo == null) {
             Toast.makeText(this, "Network is disabled. Please enable it and restart app", Toast.LENGTH_LONG).show();
             gifImageView.setImageResource(R.drawable.car_no_connection);
+            isNetworkAvailable = false;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -34,17 +36,32 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             }, 10 * 1000);
         } else {
-            new ProgressTask().execute();
+            DBRepository dbRepository = new DBRepository(getApplicationContext());
+            if ((dbRepository.getCountriesTable().getCount() != 0) &&
+                    (dbRepository.getCitiesTable().getCount() != 0)) {
+                Intent mainIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                SplashScreenActivity.this.startActivity(mainIntent);
+                dbRepository.close();
+                SplashScreenActivity.this.finish();
+            } else {
+                new ProgressTask().execute();
+            }
+
         }
     }
 
-    class ProgressTask extends AsyncTask<Void, Integer, Void> {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!isNetworkAvailable) {
+            System.exit(0);
+        }
+    }
+
+    private class ProgressTask extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... unused) {
-            DBRepository dbRepository = new DBRepository(getApplicationContext());
-
-            if ((dbRepository.getCountriesTable().getCount() == 0) &&
-                    (dbRepository.getCitiesTable().getCount() == 0)) {
+            {
                 DBFirstTimeInitializator dbFirstTimeInitializator =
                         new DBFirstTimeInitializator(getApplicationContext());
                 dbFirstTimeInitializator.initializeCountries();
@@ -61,9 +78,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void unused) {
             Intent mainIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
+
             SplashScreenActivity.this.startActivity(mainIntent);
             SplashScreenActivity.this.finish();
         }
     }
-
 }
