@@ -2,6 +2,7 @@ package com.pingwinno.cityinfoapp;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
 
             City city = cities.get(position);
+
+            Intent launch = new Intent(MainActivity.this, CityInfoActivity.class);
+            startActivity(launch);
 
             Toast.makeText(MainActivity.this, "You Clicked: " + city.getCityName(), Toast.LENGTH_SHORT).show();
         }
@@ -69,16 +73,18 @@ public class MainActivity extends AppCompatActivity {
         builder.setAdapter(counntryListAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                cities.clear();
                 cities.addAll(dbRepository.getCitiesTable().getCities(countries.get(which).getId()));
+                if (cities.size() < 1) {
 
-
+                }
                 cityAdapter.notifyDataSetChanged();
-
                 Toast.makeText(MainActivity.this, "You Clicked: " + countries.get(which).getCountryName()
                         + "   " + cities.size(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
+            }
+
+        });
         dialog = builder.create();
         dialog.getListView().setFastScrollEnabled(true);
 
