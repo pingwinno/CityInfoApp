@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class DataHelper {
-    public static String getData(String stringUrl) throws IOException {
+    public static String getStringData(String stringUrl) throws IOException {
         URL url = new URL(stringUrl);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         String result;

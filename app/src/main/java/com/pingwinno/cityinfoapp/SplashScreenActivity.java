@@ -1,9 +1,16 @@
 package com.pingwinno.cityinfoapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -11,9 +18,24 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
-
-        new ProgressTask().execute();
-
+        GifImageView gifImageView = findViewById(R.id.gif_view);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo == null) {
+            Toast.makeText(this, "Network is disabled. Please enable it and restart app", Toast.LENGTH_LONG).show();
+            gifImageView.setImageResource(R.drawable.car_no_connection);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(SplashScreenActivity.this,
+                            "But you can keep looking at a cat.\n " +
+                                    "It cute. Isn't?",
+                            Toast.LENGTH_LONG).show();
+                }
+            }, 10 * 1000);
+        } else {
+            new ProgressTask().execute();
+        }
     }
 
     class ProgressTask extends AsyncTask<Void, Integer, Void> {
