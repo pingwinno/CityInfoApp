@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             City city = cities.get(position);
 
-            UrlRequest request = new UrlRequest();
+            CityInfoRunner request = new CityInfoRunner();
             request.setView(view);
             request.execute(city.getCityName(), countryOfaCity);
         }
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.progressBar_cyclic).setVisibility(View.GONE);
     }
 
-    private class UrlRequest extends AsyncTask<String, Void, String[]> {
+    private class CityInfoRunner extends AsyncTask<String, Void, String[]> {
         View view;
 
         public void setView(@NonNull View view) {

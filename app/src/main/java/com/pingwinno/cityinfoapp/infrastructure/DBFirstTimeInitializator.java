@@ -28,7 +28,7 @@ public class DBFirstTimeInitializator {
     }
 
     public void initializeCountries() {
-        Log.d("DB_INIT", "Start");
+        Log.d("DB_INIT", "Start countries init");
 
         DBRepository dbRepository = new DBRepository(context);
         List<Country> countries = new ArrayList<>();
@@ -44,7 +44,7 @@ public class DBFirstTimeInitializator {
     }
 
     public void initializeCities() {
-        Log.d("DB_INIT", "Start");
+        Log.d("DB_INIT", "Start cities init");
 
         DBRepository dbRepository = new DBRepository(context);
         List<City> cities = new ArrayList<>();
