@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pingwinno.cityinfoapp.R;
@@ -48,6 +49,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
+        final TextView messageTextView = findViewById(R.id.message_view);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(darkenColor(
                     getResources().getColor(R.color.splashScreen)));
@@ -60,12 +62,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         appPref = getSharedPreferences("DBState", Context.MODE_PRIVATE);
         mainIntent = new Intent(SplashScreenActivity.this, MainActivity.class);
         if (activeNetworkInfo == null) {
+            messageTextView.setText(R.string.NoConnectionFirst);
             Toast.makeText(this, "Network is disabled. Please enable it and restart app", Toast.LENGTH_LONG).show();
-            gifImageView.setImageResource(R.drawable.car_no_connection);
             isNetworkAvailable = false;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
                     Toast.makeText(SplashScreenActivity.this,
                             "But you can keep looking at a cat.\n " +
                                     "It cute. Isn't?",
