@@ -17,9 +17,8 @@ public class WikiSearch {
      Get list of places and search in "summary" field for more precise results
      */
     public static WikiInfo search(String city, String country) throws IOException {
-        String placeName = city;
         String queryUrl = String.format("https://secure.geonames.org/wikipediaSearchJSON?q=%s&maxRows=100&username=pingwinno",
-                URLEncoder.encode(placeName, "UTF-8"));
+                URLEncoder.encode(city, "UTF-8"));
         Log.v("REQUEST_URL", queryUrl);
         List<WikiInfo> wikiInfos = JsonParser.parseGeonames(DataHelper.getStringData(queryUrl));
         for (WikiInfo wikiInfo : wikiInfos) {

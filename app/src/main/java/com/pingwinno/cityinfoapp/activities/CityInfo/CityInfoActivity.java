@@ -17,7 +17,6 @@ import com.pingwinno.cityinfoapp.R;
 public class CityInfoActivity extends AppCompatActivity {
 
     WebViewClient webViewClient = new WebViewClient() {
-        @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);

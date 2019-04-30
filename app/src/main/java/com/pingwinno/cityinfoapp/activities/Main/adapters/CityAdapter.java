@@ -1,6 +1,7 @@
 package com.pingwinno.cityinfoapp.activities.Main.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +24,16 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         this.inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
-    public CityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CityAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CityAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CityAdapter.ViewHolder holder, int position) {
         City city = cities.get(position);
         //  holder.imageView.setImageURI(city.getImage());
         holder.nameView.setText(city.getCityName());
@@ -47,7 +49,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         onItemClickListener = itemClickListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         // final ImageView imageView;
         final TextView nameView;
 

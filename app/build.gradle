@@ -26,11 +26,13 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
     implementation 'com.android.support:support-v4:28.0.0'
     testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:support-annotations:28.0.0'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
     api 'com.fasterxml.jackson.core:jackson-core:2.9.8'
     api 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
+    api 'com.android.support:support-annotations:28.0.0'
     api group: 'com.google.guava', name: 'guava', version: '27.1-android'
     api group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
 

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pingwinno.cityinfoapp.models.WikiInfo;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public class JsonParser {
      */
     public static Map<String, List<String>> parseJsonWithDynamicKeyAndBrokenEncoding(String stringData) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new String(stringData.getBytes("Windows-1252"), "UTF-8"), Map.class);
+        return mapper.readValue(new String(stringData.getBytes("Windows-1252"), StandardCharsets.UTF_8), Map.class);
     }
 
     public static List<WikiInfo> parseGeonames(String jsonString) throws IOException {

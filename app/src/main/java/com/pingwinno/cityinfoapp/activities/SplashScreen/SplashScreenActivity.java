@@ -67,13 +67,13 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             }, 10 * 1000);
         } else {
-            new ProgressTask().execute();
+            new DataInitialization().execute();
 
 
         }
     }
 
-    private class ProgressTask extends AsyncTask<Void, Integer, Void> {
+    private class DataInitialization extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... unused) {
             DBRepository dbRepository = new DBRepository(getApplicationContext());

@@ -54,23 +54,30 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.getRootView().setClickable(false);
             String[] webViewData = null;
             try {
-                webViewData = new ProgressTask().execute(city.getCityName(), countryOfaCity).get();
+                webViewData = new UrlRequest().execute(city.getCityName(), countryOfaCity).get();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            String url = null;
+            String color = null;
+            if (webViewData != null) {
+                url = webViewData[0];
+                color = webViewData[1];
+            }
+
             if (CustomTabsSupport.isCustomTabsSupported(getApplicationContext())) {
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
                 builder.setInstantAppsEnabled(true);
                 CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(view.getContext(), Uri.parse(webViewData[0]));
+                customTabsIntent.launchUrl(view.getContext(), Uri.parse(url));
             } else {
                 Intent intent = new Intent(MainActivity.this, CityInfoActivity.class);
-                intent.putExtra("url", webViewData[0]);
-                if (webViewData[1] != null) {
-                    intent.putExtra("theme-color", webViewData[1]);
-                }
+                intent.putExtra("url", url);
+
+                intent.putExtra("theme-color", color);
+
                 startActivity(intent);
             }
         }
@@ -134,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.getListView().setFastScrollEnabled(true);
     }
 
-    private class ProgressTask extends AsyncTask<String, Void, String[]> {
+    private class UrlRequest extends AsyncTask<String, Void, String[]> {
         String wikiUrl;
         String themeColor = "";
 
