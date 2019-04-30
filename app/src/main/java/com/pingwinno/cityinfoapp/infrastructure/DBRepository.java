@@ -132,6 +132,10 @@ public class DBRepository {
             cv.put(DBHelper.COLUMN_COUNTRY_NAME, Country.getCountryName());
             return database.update(DBHelper.COUNTRIES_TABLE, cv, whereClause, null);
         }
+
+        public void clearTable() {
+            database.execSQL("DELETE FROM " + DBHelper.COUNTRIES_TABLE);
+        }
     }
 
     public class CitiesTable {
@@ -256,6 +260,10 @@ public class DBRepository {
             ContentValues cv = new ContentValues();
             cv.put(DBHelper.COLUMN_CITY_NAME, city.getCityName());
             return database.update(DBHelper.CITIES_TABLE, cv, whereClause, null);
+        }
+
+        public void clearTable() {
+            database.execSQL("DELETE FROM " + DBHelper.CITIES_TABLE);
         }
     }
 }
