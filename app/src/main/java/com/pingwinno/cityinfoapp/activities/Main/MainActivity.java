@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -33,7 +34,6 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     List<Country> countries;
@@ -46,48 +46,19 @@ public class MainActivity extends AppCompatActivity {
     String countryOfaCity;
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {
         @Override
-        public void onClick(View view) {
-
+        public void onClick(final View view) {
+            findViewById(R.id.list).setVisibility(View.GONE);
+            findViewById(R.id.progressBar_cyclic).setVisibility(View.VISIBLE);
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
             int position = viewHolder.getAdapterPosition();
             City city = cities.get(position);
-            recyclerView.getRootView().setClickable(false);
-            String[] webViewData = null;
-            try {
-                webViewData = new UrlRequest().execute(city.getCityName(), countryOfaCity).get();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            String url = null;
-            String color = null;
-            if (webViewData != null) {
-                url = webViewData[0];
-                color = webViewData[1];
-            }
 
-            if (CustomTabsSupport.isCustomTabsSupported(getApplicationContext())) {
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                builder.setInstantAppsEnabled(true);
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(view.getContext(), Uri.parse(url));
-            } else {
-                Intent intent = new Intent(MainActivity.this, CityInfoActivity.class);
-                intent.putExtra("url", url);
-
-                intent.putExtra("theme-color", color);
-
-                startActivity(intent);
-            }
+            UrlRequest request = new UrlRequest();
+            request.setView(view);
+            request.execute(city.getCityName(), countryOfaCity);
         }
     };
 
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        recyclerView.getRootView().setClickable(true);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,41 +112,78 @@ public class MainActivity extends AppCompatActivity {
         dialog.getListView().setFastScrollEnabled(true);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        dialog.dismiss();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        findViewById(R.id.list).setVisibility(View.VISIBLE);
+        findViewById(R.id.progressBar_cyclic).setVisibility(View.GONE);
+    }
+
     private class UrlRequest extends AsyncTask<String, Void, String[]> {
-        String wikiUrl;
-        String themeColor = "";
+        View view;
+
+        public void setView(@NonNull View view) {
+            this.view = view;
+        }
 
         @Override
         protected void onPostExecute(String[] result) {
             super.onPostExecute(result);
+            String url = null;
+            String color = null;
+            if (result != null) {
+                url = result[0];
+                color = result[1];
+            }
+
+            if (CustomTabsSupport.isCustomTabsSupported(getApplicationContext())) {
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                builder.setInstantAppsEnabled(true);
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(view.getContext(), Uri.parse(url));
+            } else {
+                Intent intent = new Intent(MainActivity.this, CityInfoActivity.class);
+                intent.putExtra("url", url);
+
+                intent.putExtra("theme-color", color);
+
+                startActivity(intent);
+            }
         }
 
         @Override
         protected String[] doInBackground(String... cityNames) {
-                try {
-                        wikiUrl = "https://" + WikiSearch.search(cityNames[0], cityNames[1]).getWikipediaUrl();
-                    //extract "theme-color" value from loaded page
-                    Document doc = Jsoup.parse(DataHelper.getStringData(wikiUrl));
-                    for (Element element : doc.getElementsByTag("meta")) {
-                        if (element.toString().contains("theme-color")) {
-                            String color = element.toString();
-                            themeColor = color.substring(color.lastIndexOf("#"), color.lastIndexOf("=") + 9);
+            String wikiUrl = "";
+            String themeColor = "";
+            try {
+                wikiUrl = "https://" + WikiSearch.search(cityNames[0], cityNames[1]).getWikipediaUrl();
+                //extract "theme-color" value from loaded page
+                Document doc = Jsoup.parse(DataHelper.getStringData(wikiUrl));
+                for (Element element : doc.getElementsByTag("meta")) {
+                    if (element.toString().contains("theme-color")) {
+                        String color = element.toString();
+                        themeColor = color.substring(color.lastIndexOf("#"), color.lastIndexOf("=") + 9);
 
-                            Log.v("THEMECOLOR", themeColor);
-                        }
+                        Log.v("THEMECOLOR", themeColor);
                     }
-                    Log.v("WIKIURL", wikiUrl);
+                }
+                Log.v("WIKIURL", wikiUrl);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (wikiUrl == null) {
-                    Toast.makeText(MainActivity.this, "Can't found a place", Toast.LENGTH_SHORT).show();
-                }
-            return new String[]{wikiUrl, themeColor};
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
+            if (wikiUrl.equals("")) {
+                Toast.makeText(MainActivity.this, "Can't found a place", Toast.LENGTH_SHORT).show();
+            }
+            return new String[]{wikiUrl, themeColor};
+        }
     }
-    }
+}
 
 

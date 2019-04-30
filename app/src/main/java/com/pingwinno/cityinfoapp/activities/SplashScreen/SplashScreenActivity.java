@@ -24,9 +24,10 @@ import pl.droidsonroids.gif.GifImageView;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private boolean isNetworkAvailable = true;
     SharedPreferences appPref;
     Intent mainIntent;
+    private boolean isNetworkAvailable = true;
+
     //use for color offset
     private static int darkenColor(int color) {
         float[] hsv = new float[3];
@@ -49,8 +50,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(darkenColor(
-                    Color.parseColor("#ffe99c")));
-            getWindow().setNavigationBarColor(Color.parseColor("#ffe99c"));
+                    getResources().getColor(R.color.splashScreen)));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.splashScreen));
         }
         GifImageView gifImageView = findViewById(R.id.gif_view);
         new Intent(getIntent()).setFlags(FLAG_ACTIVITY_NO_HISTORY);
@@ -88,12 +89,16 @@ public class SplashScreenActivity extends AppCompatActivity {
             DBRepository dbRepository = new DBRepository(getApplicationContext());
             dbRepository.getCitiesTable().clearTable();
             dbRepository.getCountriesTable().clearTable();
-                DBFirstTimeInitializator dbFirstTimeInitializator =
-                        new DBFirstTimeInitializator(getApplicationContext());
-                dbFirstTimeInitializator.initializeCountries();
-                dbFirstTimeInitializator.initializeCities();
+            DBFirstTimeInitializator dbFirstTimeInitializator =
+                    new DBFirstTimeInitializator(getApplicationContext());
+            dbFirstTimeInitializator.initializeCountries();
+            dbFirstTimeInitializator.initializeCities();
 
             dbRepository.close();
+            SharedPreferences.Editor editor = appPref.edit();
+            editor.putBoolean("isDbInitialized", true);
+            editor.apply();
+            editor.commit();
             return (null);
         }
 
@@ -104,10 +109,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void unused) {
-            SharedPreferences.Editor editor = appPref.edit();
-            editor.putBoolean("isDbInitialized", true);
-            editor.apply();
-            editor.commit();
             SplashScreenActivity.this.startActivity(mainIntent);
             SplashScreenActivity.this.finish();
         }
