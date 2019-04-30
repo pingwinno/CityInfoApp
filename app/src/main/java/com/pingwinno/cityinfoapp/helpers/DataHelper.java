@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.helpers;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

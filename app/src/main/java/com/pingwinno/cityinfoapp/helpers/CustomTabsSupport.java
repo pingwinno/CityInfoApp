@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.helpers;
 
 import android.content.Context;
 import android.content.Intent;

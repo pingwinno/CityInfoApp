@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.helpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,12 +7,12 @@ import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    static final String COUNTRIES_TABLE = "countries";
-    static final String COLUMN_COUNTRY_NAME = "country";
-    static final String CITIES_TABLE = "cities";
-    static final String COLUMN_CITY_NAME = "city";
-    static final String COLUMN_COUNTRY_ID = "country_id";
-    static final String COLUMN_ID = "_id";
+    public static final String COUNTRIES_TABLE = "countries";
+    public static final String COLUMN_COUNTRY_NAME = "country";
+    public static final String CITIES_TABLE = "cities";
+    public static final String COLUMN_CITY_NAME = "city";
+    public static final String COLUMN_COUNTRY_ID = "country_id";
+    public static final String COLUMN_ID = "_id";
     private static final String DATABASE_NAME = "cityinfo.db";
     private static final int SCHEMA = 1;
 

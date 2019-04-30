@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.activities.SplashScreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import com.pingwinno.cityinfoapp.R;
+import com.pingwinno.cityinfoapp.activities.Main.MainActivity;
+import com.pingwinno.cityinfoapp.infrastructure.DBFirstTimeInitializator;
+import com.pingwinno.cityinfoapp.infrastructure.DBRepository;
 
 import pl.droidsonroids.gif.GifImageView;
 

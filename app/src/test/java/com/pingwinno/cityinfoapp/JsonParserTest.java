@@ -1,5 +1,7 @@
 package com.pingwinno.cityinfoapp;
 
+import com.pingwinno.cityinfoapp.helpers.JsonParser;
+
 import org.junit.Test;
 
 import java.io.IOException;

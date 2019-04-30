@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.activities.Main.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.pingwinno.cityinfoapp.R;
 import com.pingwinno.cityinfoapp.models.Country;
 
 import java.util.List;

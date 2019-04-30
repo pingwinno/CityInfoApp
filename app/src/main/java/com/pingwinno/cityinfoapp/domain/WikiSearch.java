@@ -1,7 +1,9 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.domain;
 
 import android.util.Log;
 
+import com.pingwinno.cityinfoapp.helpers.DataHelper;
+import com.pingwinno.cityinfoapp.helpers.JsonParser;
 import com.pingwinno.cityinfoapp.models.WikiInfo;
 
 import java.io.IOException;

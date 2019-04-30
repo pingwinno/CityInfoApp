@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.activities.Main.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,39 +7,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.pingwinno.cityinfoapp.models.Country;
+import com.pingwinno.cityinfoapp.R;
+import com.pingwinno.cityinfoapp.models.City;
 
 import java.util.List;
 
-public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder> {
+public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
     private LayoutInflater inflater;
-    private List<Country> countries;
+    private List<City> cities;
     private View.OnClickListener onItemClickListener;
 
-    CountryAdapter(Context context, List<Country> countries) {
-        this.countries = countries;
+    public CityAdapter(Context context, List<City> cities) {
+        this.cities = cities;
         this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public CountryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = inflater.inflate(R.layout.list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CountryAdapter.ViewHolder holder, int position) {
-        Country country = countries.get(position);
-        //  holder.imageView.setImageURI(country.getImage());
-        holder.nameView.setText(country.getCountryName());
+    public void onBindViewHolder(CityAdapter.ViewHolder holder, int position) {
+        City city = cities.get(position);
+        //  holder.imageView.setImageURI(city.getImage());
+        holder.nameView.setText(city.getCityName());
 
     }
 
     @Override
     public int getItemCount() {
-        return countries.size();
+        return cities.size();
     }
 
     public void setOnItemClickListener(View.OnClickListener itemClickListener) {

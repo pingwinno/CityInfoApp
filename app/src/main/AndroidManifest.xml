@@ -12,16 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CityInfoActivity"
+            android:name=".activities.CityInfo.CityInfoActivity"
             android:label="@string/title_activity_city_info"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.Main.MainActivity"
             android:theme="@style/FullscreenTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pingwinno.cityinfoapp.MainActivity" />
+                android:value=".activities.Main.MainActivity" />
         </activity>
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".activities.SplashScreen.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_splash_screen"
             android:theme="@style/FullscreenTheme">
@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.Main.MainActivity" />
     </application>
 
 </manifest>

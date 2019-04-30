@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.activities.CityInfo;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -11,6 +11,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.pingwinno.cityinfoapp.R;
 
 public class CityInfoActivity extends AppCompatActivity {
 

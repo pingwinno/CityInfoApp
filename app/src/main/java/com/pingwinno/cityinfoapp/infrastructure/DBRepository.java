@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.infrastructure;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.pingwinno.cityinfoapp.helpers.DBHelper;
 import com.pingwinno.cityinfoapp.models.City;
 import com.pingwinno.cityinfoapp.models.Country;
 

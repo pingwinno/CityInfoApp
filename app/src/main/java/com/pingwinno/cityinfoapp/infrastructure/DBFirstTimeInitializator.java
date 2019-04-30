@@ -1,8 +1,10 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.infrastructure;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.pingwinno.cityinfoapp.helpers.DataHelper;
+import com.pingwinno.cityinfoapp.helpers.JsonParser;
 import com.pingwinno.cityinfoapp.models.City;
 import com.pingwinno.cityinfoapp.models.Country;
 

@@ -1,4 +1,4 @@
-package com.pingwinno.cityinfoapp;
+package com.pingwinno.cityinfoapp.activities.Main;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,6 +15,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.pingwinno.cityinfoapp.R;
+import com.pingwinno.cityinfoapp.activities.CityInfo.CityInfoActivity;
+import com.pingwinno.cityinfoapp.activities.Main.adapters.CityAdapter;
+import com.pingwinno.cityinfoapp.activities.Main.adapters.CounntryListAdapter;
+import com.pingwinno.cityinfoapp.domain.WikiSearch;
+import com.pingwinno.cityinfoapp.helpers.CustomTabsSupport;
+import com.pingwinno.cityinfoapp.helpers.DataHelper;
+import com.pingwinno.cityinfoapp.infrastructure.DBRepository;
 import com.pingwinno.cityinfoapp.models.City;
 import com.pingwinno.cityinfoapp.models.Country;
 
